@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const events = require('./routes/api/events');
-
+const expenses = require('./routes/api/expenses');
 
 
 const app = express();
@@ -21,6 +21,7 @@ mongoose.connect(db)
 
 // routing
 app.use('/api/events', events);
+app.use('/api/expenses', expenses);
 
 const port = process.env.PORT || 5000
 
