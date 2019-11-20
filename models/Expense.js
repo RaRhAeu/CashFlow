@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-require('mongoose-currency').loadType(mongoose);
-//const Currency = mongoose.Types.Currency;
 
 
 const ExpenseSchema = new Schema({
@@ -29,6 +27,6 @@ const ExpenseSchema = new Schema({
 function setAmount(amount){
   return amount.toFixed(2);
 }
-// Expense.amount.toFixed(2);
+
 
 module.exports = Expense = mongoose.model('expense', ExpenseSchema);

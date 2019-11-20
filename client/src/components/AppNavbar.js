@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Home from './Home';
+import About from './About';
+import CreateEvent from './CreateEvent';
 import {
   Collapse,
   Navbar,
@@ -9,6 +12,11 @@ import {
   NavLink,
   Container
 } from 'reactstrap';
+
+import {
+  Route,
+  HashRouter
+} from 'react-router-dom';
 
 class AppNavbar extends Component {
     // this.toggle = this.toggle.bind(this);
@@ -22,23 +30,42 @@ class AppNavbar extends Component {
   }
   render() {
     return (
-    <div>
-      <Navbar color="dark" dark expand="sm" className="mb-5">
-        <Container>
-          <NavbarBrand href="/">Home</NavbarBrand>
+    <HashRouter>
+      <Navbar color="light" light expand="md" className="navbar-inverse">
+          <Container>
+          <NavbarBrand href="/">
+            <div >CashFlow</div>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
+
           <Collapse isOpen={this.state.isOpen} navbar>
+
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/">
-                    Test
-                </NavLink>
+              <NavItem className="nav-link">
+                  <NavLink href="#/">Home</NavLink>
               </NavItem>
+              <NavItem className="nav-link">
+                  <NavLink href="#/about">About</NavLink>
+            </NavItem>
+              <NavItem className="nav-link">
+                  <NavLink href="#/create">Create Event</NavLink>
+            </NavItem>
             </Nav>
           </Collapse>
-        </Container>
+          </Container>
+
+
       </Navbar>
-    </div>    
+      <Container>
+        <div className="content">
+          <Route exact path="/" component={Home}/>
+          <Route exact path="/about" component={About}/>
+          <Route exact path="/create" component={CreateEvent}/>
+        </div>
+      </Container>
+
+    </HashRouter>
+
   )}
 }
 
