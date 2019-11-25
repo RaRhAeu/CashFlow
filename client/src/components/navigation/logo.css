@@ -1,0 +1,33 @@
+.logo img{
+
+
+  width: 45px;
+  height: 45px;
+}
+
+.logo {
+  margin-left: 30px;
+  display: flex;
+
+  justify-content: space-around;
+  align-items: center;
+}
+.logo span {
+  padding-top: 5px;
+  font-size: 2rem;
+  margin-left: 15px;
+  height: 100%;
+}
+.underscore {
+  width: 140px;
+  height: 3px;
+  background: #000;
+  margin-bottom: 2px;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 920px) {
+  .logo {
+    display: none;
+  }
+}

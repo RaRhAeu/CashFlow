@@ -1,0 +1,14 @@
+.mcontent {
+  display: flex;
+  width: 70vw;
+  margin: 4vw;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 46px;
+  flex-direction: column;
+  align-items: center;
+}
+.mcontent p {
+  margin: 15px;
+  padding: 15px;
+  font-size: 2rem;
+}

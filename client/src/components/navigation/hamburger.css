@@ -1,0 +1,16 @@
+@media screen and (max-width: 900px) {
+ .line {
+   width: 30px;
+   height: 3px;
+   background: #000;
+   margin: 5px;
+ }
+ .hamburger {
+   position: absolute;
+   cursor: pointer;
+   right: 5%;
+   top: 50%;
+   transform: translate(-5%, -50%);
+   z-index: 2;
+ }
+}
