@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const Expense = require('../../models/Expense');
+const Event = require('../../models/Event');
 
 router.get('/:name', (req, res) => {
-  Expene.find({ eventName: req.params.name })
-    .then(async function(expenses) {
+  Expense.find({ eventName: req.params.name })
+    .then(async (expenses) => {
       const response = await fetch('http://127.0.0.1:8888/',
       {
         method: 'POST',
