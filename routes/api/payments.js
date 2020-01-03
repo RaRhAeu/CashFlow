@@ -3,21 +3,24 @@ const router = express.Router();
 
 const Expense = require('../../models/Expense');
 const Event = require('../../models/Event');
+const PaymentCalc = require('./PaymentCalc');
 
-router.get('/:name', (req, res) => {
-  Expense.find({ eventName: req.params.name })
-    .then(async (expenses) => {
-      const response = await fetch('http://127.0.0.1:8888/',
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(expenses)
+router.get('/:eventId', (req, res) => {
+    const EventID = req.params.eventID;
+  Expense.find({ eventID: EventID })
+    .then((expenses) => {
+      const payments = [];
+      expenses.forEach(expense => {
+          let newExpense = {who: expense.who, amount: expense.amount, involved: expense.involved};
+          payments.push(newExpense);
       });
-      const content = await response.json();
-      res.json(content);
+        let all_names = [];
+      Event.findById(EventID)
+          .then(event => all_names = event.participants)
+          .catch(err => console.log(err));
+      const resolved = new PaymentCalc(payments, all_names);
+      const res_json = resolved.finalPayments();
+      res.json(res_json);
     })
 })
 
