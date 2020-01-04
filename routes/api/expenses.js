@@ -13,8 +13,8 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/:name', (req, res) => {
-  Expense.find({ eventName: req.params.name })
+router.get('/:id', (req, res) => {
+  Expense.find({ eventID: req.params.id })
     .then((expenses) => res.json(expenses)
   )
     .catch((err) => {
@@ -25,7 +25,7 @@ router.get('/:name', (req, res) => {
 
 router.post('/', (req, res) => {
   const newExpense = new Expense({
-    eventName: req.body.eventName,
+    eventID: req.body.eventID,
     who: req.body.who,
     amount: req.body.amount,
     involved: req.body.involved

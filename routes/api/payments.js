@@ -5,23 +5,34 @@ const Expense = require('../../models/Expense');
 const Event = require('../../models/Event');
 const PaymentCalc = require('./PaymentCalc');
 
-router.get('/:eventId', (req, res) => {
-    const EventID = req.params.eventID;
-  Expense.find({ eventID: EventID })
+router.get('/:eventID', (req, res) => {
+  const eventID = req.params.eventID;
+  Expense.find({ eventID: eventID })
     .then((expenses) => {
+      //console.log(expenses);
       const payments = [];
       expenses.forEach(expense => {
-          let newExpense = {who: expense.who, amount: expense.amount, involved: expense.involved};
+          const newExpense = {
+            who: expense.who,
+            amount: expense.amount,
+            involved: expense.involved
+          };
+
           payments.push(newExpense);
       });
-        let all_names = [];
-      Event.findById(EventID)
-          .then(event => all_names = event.participants)
-          .catch(err => console.log(err));
-      const resolved = new PaymentCalc(payments, all_names);
-      const res_json = resolved.finalPayments();
-      res.json(res_json);
+    Event.findById(eventID)
+        .then(event => {
+          const all_names = [...event.participants];
+          const resolved = new PaymentCalc(payments, all_names);
+          resolved.finalPayments();
+
+          res.json(resolved.results);
+        }).catch(err => console.log(err));
     })
-})
+    .catch(err => {
+      console.log(err);
+      res.status(500);
+  });
+});
 
 module.exports = router;

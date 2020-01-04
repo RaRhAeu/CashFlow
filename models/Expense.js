@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 // enentName => EventID: { type: ObjectID }
 const ExpenseSchema = new Schema({
-  eventName: {
-    type: String,
+  eventID: {
+    type: Schema.ObjectId,
     required: true,
     trim: true
   },

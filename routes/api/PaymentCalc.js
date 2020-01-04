@@ -32,7 +32,7 @@ class PaymentCalc{
                 const debtors = this.expenses[i].involved;
                 const debtors_index = this.index_of(this.names, debtors);
                 const charge = amount/debtors.length;
-                debtors_index.forEach(idx => { M[name_index][idx] += charge});
+                debtors_index.forEach(idx => { M[name_index][idx] += charge });
             }
         }
         return M;
@@ -41,19 +41,19 @@ class PaymentCalc{
         const graph = this.costMatrix();
         const N = this.names.length;
         function min_idx(arr) {
-            return arr.indexOf(Math.min(...arr))
+          return arr.indexOf(Math.min(...arr));
         }
         function max_idx(arr) {
-            return arr.indexOf(Math.max(...arr));
+          return arr.indexOf(Math.max(...arr));
         }
         const minCashFlowRec = (amount) => {
             const mxCredix = max_idx(amount);
             const mxDebit = min_idx(amount);
-            if (Math.abs(amount[mxCredix]) < 0.01 && Math.abs(amount[mxDebit]) < 0.01) {
+            if (Math.abs(amount[mxCredix]) <= 0.01 && Math.abs(amount[mxDebit]) <= 0.01) {
                 return;
             }
             const min_amount = Math.min(-amount[mxDebit], amount[mxCredix]);
-            if (Math.abs(min_amount) < 0.01) {
+            if (Math.abs(min_amount) <= 0.01) {
                 return;
             }
             amount[mxCredix] -= min_amount;
@@ -81,38 +81,4 @@ class PaymentCalc{
     }
 }
 
-const all_names = ['Person1', 'Person2', 'Person3'];
-
-const payments = [
-    {
-        who: "Person2",
-        amount: 8.0,
-        involved: ['Person1'],
-    },
-    {
-        who: "Person1",
-        amount: 17.0,
-        involved: all_names,
-    },
-    {
-        who: "Person3",
-        amount: 4.0,
-        involved: ['Person3', 'Person2', 'Person1']
-    },
-    {
-        who: "Person3",
-        amount: 20.0,
-        involved: ['Person2']
-    },
-    {
-        who: "Person1",
-        amount: 100,
-        involved: ["Person3"],
-    }
-];
-/*
-const a = new PaymentCalc(payments, all_names);
-a.finalPayments();
-console.log(a.getResults());
-*/
 module.exports = PaymentCalc;

@@ -23,6 +23,17 @@ router.post('/', (req, res) => {
     .catch(err => res.status(404));
 
 });
+router.get('/:id', (req, res) => {
+  Event.findById(req.params.id)
+    .then(event => {
+      console.log(event.participants);
+      res.json(event);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(404);
+    })
+})
 
 router.delete('/:id', (req, res) => {
   Event.findById(req.params.id)
