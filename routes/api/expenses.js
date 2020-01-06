@@ -27,6 +27,7 @@ router.post('/', (req, res) => {
   const newExpense = new Expense({
     eventID: req.body.eventID,
     who: req.body.who,
+    whatfor: req.body.whatfor,
     amount: req.body.amount,
     involved: req.body.involved
   });

@@ -29,12 +29,15 @@ class Create extends Component {
     }
     for(let i=0; i<=this.state.pnumber; i++) {
       let person = this.state[`person${i}`];
-      if (person) data.participants.push(person)
+      if (person !== undefined) {
+        data.participants.push(person)
+      }
     }
+    // console.log(data);
     const url = '/api/events'
     axios.post(url, data)
       .then(response => {
-        console.log(response);
+        // console.log(response);
         this.setState({
           toManage: true,
           eventId: response.data._id
@@ -68,7 +71,7 @@ class Create extends Component {
             </FormGroup>
             {[...Array(this.state.pnumber)].map((n,i) =>
               <FormGroup key={i}>
-                <Input type="text" id={"person"+(i+1)} name={"person"+(i+1)} placeholder={"person "+(i+1)} onChange={this.change} />
+                <Input type="text" id={"person"+(i+1)} name={"person"+(i+1)} placeholder={"person "+(i+1)} onChange={this.changeNames} />
               </FormGroup>
             )}
             <FormGroup>

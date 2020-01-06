@@ -26,7 +26,6 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   Event.findById(req.params.id)
     .then(event => {
-      console.log(event.participants);
       res.json(event);
     })
     .catch(err => {

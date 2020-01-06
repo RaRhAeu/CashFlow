@@ -19,7 +19,9 @@ class Manage extends Component {
       isLoaded: false,
       eventId: props.location.pathname.split('/')[2],
       eventName: '',
-      expenses: []
+      expenses: [],
+      involved: [],
+      allChecked: false
     }
   }
   shouldComponentUpdate(nextProps, nextState){
@@ -35,10 +37,10 @@ class Manage extends Component {
     const payurl = `/api/payments/${this.state.eventId}`;
     axios.get(eventurl)
       .then(response => {
-        console.log(response);
         this.setState({
           eventName: response.data.name,
-          participants: response.data.participants
+          participants: response.data.participants,
+          who: response.data.participants[0]
         });
         axios.get(expurl)
           .then(response => {
@@ -60,10 +62,62 @@ class Manage extends Component {
   componentDidMount() {
     this.fetchData();
   }
+  whatFor = (e) => {
+    this.setState({
+      whatfor: e.target.value
+    })
+  }
+  whoName = (e) => {
+    this.setState({
+      who: e.target.value
+    })
+  }
+  amount = (e) => {
+    this.setState({
+      amount: e.target.value
+    })
+  }
+  toggleExpense = () =>{
+    this.setState({
+      adding: !this.state.adding
+    })
+  }
+  checkBoxAdd = (e) => {
+    this.setState({
+      involved: [...this.state.involved, e.target.value]
+    })
+  }
+  allChecked = (e) => {
+    this.setState({
+      allChecked: !this.state.allChecked
+    })
+  }
   addExpense = () => {
     this.setState({
       adding: !this.state.adding
     })
+    const posturl = "/api/expenses/";
+    let involved = [];
+    if(this.state.allChecked) {
+      involved = this.state.participants;
+    } else {
+      involved = this.state.involved;
+    }
+    const data = {
+      eventID: this.state.eventId,
+      who: this.state.who,
+      amount: parseFloat(this.state.amount),
+      whatfor: this.state.whatfor,
+      involved: involved
+    }
+    this.setState({
+      involved: [],
+      allChecked: false
+    })
+    axios.post(posturl, data)
+      .then(res => {
+        this.fetchData();
+      })
   }
   removeExpense = (id) => {
     const delurl = `/api/expenses/${id}`;
@@ -72,7 +126,7 @@ class Manage extends Component {
       this.setState({
         isLoaded: false
       })
-      fetchData();
+      this.fetchData();
     }).catch(err => console.log(err));
 
   }
@@ -87,7 +141,7 @@ class Manage extends Component {
           <Form>
             <FormGroup>
               <Label for="who" >Who paid?</Label>
-              <Input type="select" name="who" id="who">
+              <Input type="select" name="who" id="who" onChange={this.whoName}>
                 {participants.map((el, i) =>
                   <option key={i} value={el}>{el}</option>
                 )}
@@ -95,27 +149,27 @@ class Manage extends Component {
             </FormGroup>
             <FormGroup>
               <Label for="whatfor">For what?</Label>
-              <Input type="text" name="whatfor" id="whatfor" placeholder="Cinema Tickets"/>
+              <Input type="text" name="whatfor" id="whatfor" onChange={this.whatFor} placeholder="Cinema Tickets"/>
             </FormGroup>
             <FormGroup>
               <Label for="amount">How much?</Label>
-              <Input type="number" name="amount" id="amount" min="0.01" placeholder="zł"/>
+              <Input type="number" name="amount" id="amount" min="0.01" placeholder="PLN" onChange={this.amount}/>
             </FormGroup>
             <FormGroup tag="fieldset" row>
               <legend className="col-form-label col-sm-2">Split between:</legend>
             <Col sm={10}>
             <FormGroup check>
               <Label check>
-                <Input type="checkbox" name="all" ref={el => this.all = el}/>{' '}All
+                <Input type="checkbox" name="all" onChange={this.allChecked}/>{' '}All
               </Label>
             </FormGroup>
-            {participants.map((el, i) =>
-              <FormGroup check key={i}>
-                <Label check>
-                  <Input type="checkbox" name={el}/>{'' + el}
-                </Label>
-              </FormGroup>
-            )}
+              {participants.map((el, i) =>
+                <FormGroup check key={i}>
+                  <Label check>
+                    <Input type="checkbox" onClick={this.checkBoxAdd} value={el} name={"person"+i}/>{'' + el}
+                  </Label>
+                </FormGroup>
+              )}
             </Col>
           </FormGroup>
 
@@ -129,7 +183,7 @@ class Manage extends Component {
       <div>
         <h1 className="heading">{eventName}</h1>
         <h2>Expenses:
-          <Button outline color="success" className="float-right" onClick={this.addExpense}>Add Expense</Button>
+          <Button outline color="success" className="float-right" onClick={this.toggleExpense}>Add Expense</Button>
         </h2>
 
         <div>
@@ -150,7 +204,7 @@ class Manage extends Component {
             <ListGroup>
               {payments.map((el, i) =>
                 <ListGroupItem key={i}>
-                  {el.from} pays {el.amount} to {el.to}
+                  {el.from} pays {el.amount} PLN to {el.to}
                 </ListGroupItem>
               )}
             </ListGroup>

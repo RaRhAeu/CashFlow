@@ -12,15 +12,15 @@ const ExpenseSchema = new Schema({
     type: String,
     required: true
   },
+  whatfor: {
+    type: String,
+    required: true
+  },
   amount: {
     type: Number,
     required: true,
     min: 0.01,
     set: setAmount
-  },
-  whatfor: {
-    type: String,
-    required: true
   },
   involved: {
     type: [String],
