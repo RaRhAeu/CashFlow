@@ -1,6 +1,8 @@
 # CashFlow
 Web app that makes managing expenses easier
 
+Live version: [todo]
+
 ### API endpoints: 
 ___
 ### Events

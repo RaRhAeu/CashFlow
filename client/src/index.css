@@ -1,0 +1,28 @@
+.heading {
+  margin-top: 20px !important;
+  padding-top: 20px !important;
+}
+.about-p {
+  margin: 10px;
+  padding: 10px;
+  font-size: 2rem;
+}
+
+.mainbutton {
+  position: absolute;
+  margin-top: 50px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.mainheading {
+  text-align: center;
+  margin: 10vh;
+}
+.mainp {
+  text-align: center;
+  margin: 5vh;
+  font-size: 2rem;
+}
+.create-m {
+  margin-bottom: 10vh;
+}

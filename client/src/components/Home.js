@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import { Container, Button, Row, Col } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 
 class Home extends Component {
   render() {
     return(
-      <Container>
-        <h1>What is CashFlow?</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi numquam consectetur sapiente inventore totam odio harum veniam commodi blanditiis ab, eaque ut a dolor quod error culpa magni fugit temporibus officiis rem sint? Temporibus aliquam excepturi deserunt a quibusdam in obcaecati, facere error perspiciatis voluptatum, eaque quidem qui rem ipsum!</p>
-        <Row>
+      <div>
+        <div className="mainheading">
+          <h1>Welcome to CashFlow</h1>
+        </div>
+          <p className="mainp">
+            Start Right now by creating new event!
+          </p>
 
-
-</Row>
-        <Row >
-               <Col sm="12" md={{ size: 6, offset: 3 }}>
-                 <Button color="primary" size="lg" block>Get started</Button>
-               </Col>
-             </Row>
-
-      </Container>
+          <div className="mainbutton">
+            <Button size="lg" color="success" href="/create">
+              Get Started!
+            </Button>
+          </div>
+      </div>
 
     )
   }

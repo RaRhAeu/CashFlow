@@ -9,7 +9,6 @@ router.get('/:eventID', (req, res) => {
   const eventID = req.params.eventID;
   Expense.find({ eventID: eventID })
     .then((expenses) => {
-      //console.log(expenses);
       const payments = [];
       expenses.forEach(expense => {
           const newExpense = {
@@ -23,6 +22,9 @@ router.get('/:eventID', (req, res) => {
     Event.findById(eventID)
         .then(event => {
           const all_names = [...event.participants];
+          if (all_names.length == 0) {
+            res.status(404).json({succes: "false"});
+          }
           const resolved = new PaymentCalc(payments, all_names);
           resolved.finalPayments();
 
