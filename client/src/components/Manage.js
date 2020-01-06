@@ -128,7 +128,6 @@ class Manage extends Component {
       })
       this.fetchData();
     }).catch(err => console.log(err));
-
   }
 
   render(){
@@ -211,6 +210,7 @@ class Manage extends Component {
           </div>
 
         </div>
+        
       </div>
     )
   }

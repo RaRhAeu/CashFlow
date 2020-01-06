@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import Test from './Test';
 import Home from './Home';
 import About from './About';
 import Create from './Create';
@@ -15,7 +14,6 @@ class Container extends Component {
         <Route exact path="/create" component={Create}></Route>
         <Route exact path="/about" component={About}></Route>
         <Route exact path="/manage/:eventid" component={Manage}></Route>
-        <Route exact path="/manage/newexpense/:eventid" component={Test}></Route>
       </div>
     )
   }
