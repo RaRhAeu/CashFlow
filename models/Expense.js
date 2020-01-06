@@ -18,6 +18,10 @@ const ExpenseSchema = new Schema({
     min: 0.01,
     set: setAmount
   },
+  whatfor: {
+    type: String,
+    required: true
+  },
   involved: {
     type: [String],
     required: true

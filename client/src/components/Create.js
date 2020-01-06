@@ -73,7 +73,7 @@ class Create extends Component {
             )}
             <FormGroup>
               <Button onClick={this.addPerson}>+ Add person</Button>{' '}
-              <Button onClick={this.createEvent} color="primary">Submit</Button>{' '}
+              <Button onClick={this.createEvent} className="float-right" size="lg" color="primary">Submit</Button>{' '}
             </FormGroup>
           </Form>
         </div>

@@ -5,7 +5,7 @@ import Test from './Test';
 import Home from './Home';
 import About from './About';
 import Create from './Create';
-
+import Manage from './Manage';
 
 class Container extends Component {
   render() {
@@ -14,7 +14,7 @@ class Container extends Component {
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/create" component={Create}></Route>
         <Route exact path="/about" component={About}></Route>
-        <Route exact path="/manage/:eventid" component={Test}></Route>
+        <Route exact path="/manage/:eventid" component={Manage}></Route>
         <Route exact path="/manage/newexpense/:eventid" component={Test}></Route>
       </div>
     )
