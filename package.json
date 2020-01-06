@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Web app that makes managing expenses easier",
   "main": "server.js",
+  "engines": {
+    "node": "10.15.2"
+  },
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
