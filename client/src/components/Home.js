@@ -10,7 +10,7 @@ class Home extends Component {
           <h1>Welcome to CashFlow</h1>
         </div>
           <p className="mainp">
-            Start Right now by creating new event!
+            Start right now by creating new event!
           </p>
 
           <div className="mainbutton">

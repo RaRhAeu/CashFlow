@@ -190,7 +190,7 @@ class Manage extends Component {
             {expenses.map((el,i) =>
               <ListGroupItem key={el._id}>
                 <div>
-                  {el.who} paid {el.amount} for {el.whatfor}
+                  {el.who} paid {el.amount} PLN for {el.whatfor}
                   <Button outline className="float-right" color="danger" onClick={() => {
                     this.removeExpense(el._id)}}>&times;</Button>
                 </div>
@@ -210,7 +210,7 @@ class Manage extends Component {
           </div>
 
         </div>
-        
+
       </div>
     )
   }
