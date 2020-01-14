@@ -1,9 +1,9 @@
 # CashFlow
 Web app that makes managing expenses easier
 
-Live version: [todo]
+[Live Version](https://cashflowv1.herokuapp.com/about)
 
-### API endpoints: 
+### API endpoints:
 ___
 ### Events
 
