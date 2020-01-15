@@ -3,7 +3,9 @@ const router = express.Router();
 
 // Event model
 const Event = require('../../models/Event');
+const Expense = require('../../models/Expense');
 
+// TODO: block route?
 router.get('/', (req, res) => {
   Event.find()
     .sort({ date: -1 })
@@ -35,7 +37,13 @@ router.get('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
-  Event.findById(req.params.id)
+  const id = req.params.id;
+  Expense.find({eventID: id})
+    .then(expenses => expenses.forEach(expense => {
+      expense.remove();
+    }))
+    .catch(err => res.status(404).json({success: false}));
+  Event.findById(id)
     .then(event => event.remove()
       .then(() => res.json({success: true})))
     .catch(err => res.status(404).json({success: false }))

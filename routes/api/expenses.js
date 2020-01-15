@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Expense = require('../../models/Expense');
 
-
+// TODO: block route?
 router.get('/', (req, res) => {
   Expense.find()
     .then((expenses) => res.json(expenses))

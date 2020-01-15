@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {
   Button,
-  ListGroup,
-  ListGroupItem,
   Form,
   FormGroup,
   Label,
   Input,
+  CustomInput,
   Col
  } from 'reactstrap';
+ import PaymentList from './PaymentList';
+ import ExpenseList from './ExpenseList';
+ import Share from './Share';
 
 class Manage extends Component {
   constructor(props) {
@@ -62,24 +64,18 @@ class Manage extends Component {
   componentDidMount() {
     this.fetchData();
   }
-  whatFor = (e) => {
+
+  dataChange = (event) => {
+    const val = event.target.value;
     this.setState({
-      whatfor: e.target.value
-    })
-  }
-  whoName = (e) => {
-    this.setState({
-      who: e.target.value
-    })
-  }
-  amount = (e) => {
-    this.setState({
-      amount: e.target.value
+      [event.target.name]: val
     })
   }
   toggleExpense = () =>{
     this.setState({
-      adding: !this.state.adding
+      adding: !this.state.adding,
+      involved: [],
+      allChecked: false
     })
   }
   checkBoxAdd = (e) => {
@@ -93,9 +89,6 @@ class Manage extends Component {
     })
   }
   addExpense = () => {
-    this.setState({
-      adding: !this.state.adding
-    })
     const posturl = "/api/expenses/";
     let involved = [];
     if(this.state.allChecked) {
@@ -110,10 +103,7 @@ class Manage extends Component {
       whatfor: this.state.whatfor,
       involved: involved
     }
-    this.setState({
-      involved: [],
-      allChecked: false
-    })
+    this.toggleExpense();
     axios.post(posturl, data)
       .then(res => {
         this.fetchData();
@@ -140,77 +130,46 @@ class Manage extends Component {
           <Form>
             <FormGroup>
               <Label for="who" >Who paid?</Label>
-              <Input type="select" name="who" id="who" onChange={this.whoName}>
+              <Input type="select" name="who" id="who" onChange={this.dataChange}>
                 {participants.map((el, i) =>
                   <option key={i} value={el}>{el}</option>
                 )}
-            </Input>
+              </Input>
             </FormGroup>
             <FormGroup>
               <Label for="whatfor">For what?</Label>
-              <Input type="text" name="whatfor" id="whatfor" onChange={this.whatFor} placeholder="Cinema Tickets"/>
+              <Input type="text" name="whatfor" id="whatfor" onChange={this.dataChange} placeholder="Cinema Tickets"/>
             </FormGroup>
             <FormGroup>
               <Label for="amount">How much?</Label>
-              <Input type="number" name="amount" id="amount" min="0.01" placeholder="PLN" onChange={this.amount}/>
+              <Input type="number" name="amount" id="amount" min="0.01" placeholder="PLN" onChange={this.dataChange}/>
             </FormGroup>
-            <FormGroup tag="fieldset" row>
-              <legend className="col-form-label col-sm-2">Split between:</legend>
-            <Col sm={10}>
-            <FormGroup check>
-              <Label check>
-                <Input type="checkbox" name="all" onChange={this.allChecked}/>{' '}All
-              </Label>
-            </FormGroup>
-              {participants.map((el, i) =>
-                <FormGroup check key={i}>
-                  <Label check>
-                    <Input type="checkbox" onClick={this.checkBoxAdd} value={el} name={"person"+i}/>{'' + el}
-                  </Label>
-                </FormGroup>
-              )}
-            </Col>
-          </FormGroup>
 
+            <Col sm={10}>
+              <FormGroup>
+                <Label for="chbx">Split between:</Label>
+                  <div>
+                    <CustomInput type="checkbox" id="chbx" label="All (equally)" onChange={this.allChecked}/>
+                      {participants.map((el, i) =>
+                        <CustomInput type="checkbox" id={i} value={el} label={el} key={i} onClick={this.checkBoxAdd}/>
+                      )}
+                  </div>
+              </FormGroup>
+            </Col>
           </Form>
           <Button outline className="float-right" onClick={this.addExpense}>Submit</Button>
         </div>
       )
     }
-
     return (
       <div>
         <h1 className="heading">{eventName}</h1>
         <h2>Expenses:
           <Button outline color="success" className="float-right" onClick={this.toggleExpense}>Add Expense</Button>
         </h2>
-
-        <div>
-          <ListGroup>
-            {expenses.map((el,i) =>
-              <ListGroupItem key={el._id}>
-                <div>
-                  {el.who} paid {el.amount} PLN for {el.whatfor}
-                  <Button outline className="float-right" color="danger" onClick={() => {
-                    this.removeExpense(el._id)}}>&times;</Button>
-                </div>
-              </ListGroupItem>
-            )}
-
-          </ListGroup>
-          <div>
-            <h2 className="heading">How to settle all debts?</h2>
-            <ListGroup>
-              {payments.map((el, i) =>
-                <ListGroupItem key={i}>
-                  {el.from} pays {el.amount} PLN to {el.to}
-                </ListGroupItem>
-              )}
-            </ListGroup>
-          </div>
-
-        </div>
-
+          <ExpenseList expenses={expenses} onRemove={this.removeExpense} />
+          <PaymentList payments={payments} />
+          <Share />
       </div>
     )
   }
