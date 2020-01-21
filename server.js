@@ -13,10 +13,10 @@ const app = express();
 // body parser middleware
 app.use(bodyParser.json());
 
-// secret
-const secret = require('./config/keys').secret;
+
 // db config
-const db = require('./config/keys').mongoURI;
+
+const db = "mongodb://localhost:27017/cashflow"
 // connection to mongodb
 mongoose.connect(db)
   .then(() => console.log('MongoDB connected'))
