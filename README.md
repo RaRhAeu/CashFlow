@@ -3,6 +3,16 @@ Web app that makes managing expenses easier
 
 [Live Version](https://cashflowv1.herokuapp.com/about)
 
+### Instalation:
+1. Clone or download repo
+`git clone https://github.com/RaRhAeu/CashFlow.git`
+
+2. Run install.sh
+`cd CashFlow && chmod u+x ./install.sh && sudo ./install.sh`
+
+3. Run server by typing:
+`npm start`
+
 ### API endpoints:
 ___
 ### Events
