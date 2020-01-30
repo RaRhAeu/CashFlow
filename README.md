@@ -3,7 +3,7 @@ Web app that makes managing expenses easier
 
 [Live Version](https://cashflowv1.herokuapp.com/about)
 
-### Instalation:
+### Installation:
 1. Download following software:
 
   `Nodejs v10.15.2`
@@ -13,6 +13,7 @@ Web app that makes managing expenses easier
   `MongoDB v3.6.8`
 
 2. Clone or download repo
+
   `git clone https://github.com/RaRhAeu/CashFlow.git`
 
 2. Run following commands:
